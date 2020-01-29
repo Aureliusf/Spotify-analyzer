@@ -7,7 +7,7 @@ import requests
 id = 'GVZn2EmQiJNzWPvOm7dt'
 
 url = 'https://api.spotify.com/v1/audio-features/{}'
-headers = {'Authorization':'Bearer BQA8eQvzCH4GuAKKgiAVX7-UmFvgcG-C-xIxe28XCTLnKqtvvHg0wowfv6Gb1lwgn0_6zd4sQ_8KJgw5bCRJxU0Qu1cIBoeY_p1uhrhk8O0b71dKl4cBteQMOtBn9l7-ZpXVEMmKFgasung'}
+headers = {'Authorization':'Bearer {}'}
 
 r = requests.get(url.format(id),headers=headers)
 

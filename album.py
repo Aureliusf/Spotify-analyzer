@@ -3,7 +3,7 @@ import requests
 
 id = '3yj1EziuVuch1OayyM95az'
 url = 'https://api.spotify.com/v1/albums/{}/tracks'
-headers = {'Authorization':'Bearer BQA8eQvzCH4GuAKKgiAVX7-UmFvgcG-C-xIxe28XCTLnKqtvvHg0wowfv6Gb1lwgn0_6zd4sQ_8KJgw5bCRJxU0Qu1cIBoeY_p1uhrhk8O0b71dKl4cBteQMOtBn9l7-ZpXVEMmKFgasung'}
+headers = {'Authorization':'Bearer {}'}
 
 abulm = requests.get('https://api.spotify.com/v1/albums/{}/tracks'.format(id),headers=headers)
 data = json.loads(abulm.text)
