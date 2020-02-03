@@ -2,11 +2,19 @@ import json
 import requests
 import matplotlib.pyplot as plt
 
+# Reads API key, this solution is temporary and really messy
+try:
+    with open("temp-key.txt", "r") as f:
+        api_key = f.read().strip()
+except FileNotFoundError:
+    print("File not found")
+#print(api_key)
+
 id = []
 id.append('4V3PsyJJOVXw1SNm7pJh6e')
 id.append('3yj1EziuVuch1OayyM95az')
 url = 'https://api.spotify.com/v1/audio-features/{}'
-headers = {'Authorization':'Bearer {}'}
+headers = {'Authorization':'Bearer {}'.format(api_key)}
 
 song = requests.get('https://api.spotify.com/v1/audio-features/{}'.format(id[0]),headers=headers)
 
@@ -43,5 +51,3 @@ for n in range(0,len(features_clean)):
     plt.annotate(features_clean[n]['name'],((n+1),features_clean[n]['value']))
 
 plt.show()
-
-
