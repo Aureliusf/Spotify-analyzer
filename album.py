@@ -2,40 +2,43 @@ import json
 import matplotlib as plt
 import requests
 
-id = '3yj1EziuVuch1OayyM95az'
-url = 'https://api.spotify.com/v1/albums/{}/tracks'
-headers = {'Authorization':'Bearer {}'}
+# Reads API key, this solution is temporary and really messy
+try:
+    with open("temp-key.txt", "r") as f:
+        api_key = f.read().strip()
+except FileNotFoundError:
+    print("File not found")
+#print(api_key)
 
-abulm = requests.get('https://api.spotify.com/v1/albums/{}/tracks'.format(id),headers=headers)
-song = requests.get('https://api.spotify.com/v1/audio-features/{}',headers=headers)
-data = json.loads(abulm.text)
-uris = []
-song_titles = []
+# Set album id, headers and requests
+id = '3yj1EziuVuch1OayyM95az'
+headers = {'Authorization':'Bearer {}'.format(api_key)}
+try:
+    r = requests.get('https://api.spotify.com/v1/albums/{}/tracks'.format(id),headers=headers)
+except NoResponse:
+    print("Cannot do")
+data = json.loads(r.text)
+#print(data)
+
+# Iniciates needed variables
+uris = ''
+titles = []
 
 # Get songs from album
-
 for n in range(1,len(data)):
     uri = data['items'][n]['uri']
+    titles.append(data['items'][n]['name'])
     uri = uri[14:len(uri)]
-    uris.append(uri)
-    song_titles.append(data['items'][n]['name'])
-print(uris)
+    uris = uris+uri+'%2C'
+#print(uris)
 
-# Get song features
-for n in range (0,len(uris)):
-    song  = requests.get('https://api.spotify.com/v1/audio-features/{}'.format(uris[n]),headers=headers)
-    #print(song.text)
-    # Loads data into the fixed structure below for every song
-    features = json.loads(song.text)
-    features_clean = [{'name':'danceability','value':0},{'name':'energy','value':0},{'name':'speechiness','value':0},{'name':'acousticness','value':0},{'name':'instrumentalness','value':0},{'name':'liveness','value':0},{'name':'valence','value':0}]
- 
-    for n in range(0,len(features_clean)):
-        print(features[features_clean[n]['name']])
-        features_clean[n]['value'] = features[features_clean[n]['name']]
-    album[n]['features'] = features_clean
- 
-    print(features_clean)
+# Get songs features
+try:
+    r = requests.get('https://api.spotify.com/v1/audio-features?ids={}'.format(uris),headers=headers)
+except NoResponse:
+    print('Cannot do')
 
+data = json.loads(r.text)
 
-
-
+for n in range(0,len(titles)):
+    print(data['audio_features'][n]['id'],titles[n])
