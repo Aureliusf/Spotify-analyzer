@@ -1,5 +1,3 @@
-• Plot each feature in respective graph
-• Get conclusions wich song is the most in each feature
 • Make it comparable in between albums
 • Make external API key tool
 • Get conclusions in between albums

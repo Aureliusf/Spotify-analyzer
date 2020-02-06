@@ -11,14 +11,16 @@ except FileNotFoundError:
 #print(api_key)
 
 # Set album id, headers and requests
-id = '3yj1EziuVuch1OayyM95az'
+print('Which album do you want to analyze, please paste the uri here:')
+id = input()
 headers = {'Authorization':'Bearer {}'.format(api_key)}
 try:
-    r = requests.get('https://api.spotify.com/v1/albums/{}/tracks'.format(id),headers=headers)
+    r = requests.get('https://api.spotify.com/v1/albums/{}/tracks?limit=50'.format(id),headers=headers)
 except error:
     print("Cannot do")
 data = json.loads(r.text)
 #print(data)
+#print(len(data['items']))
 
 # Iniciates needed variables
 uris = ''
@@ -32,14 +34,16 @@ liveness = []
 valence = []
 features = [danceability,energy,speechiness,acousticness,instrumentalness,liveness,valence]
 features_list = ['Danceability','Energy','Speechiness','Acousticness','Instrumentalness','Liveness','Valence']
+bestest = []
 
 # Get songs from album
-for n in range(1,len(data)):
+for n in range(0,len(data['items'])):
     uri = data['items'][n]['uri']
     titles.append(data['items'][n]['name'])
     uri = uri[14:len(uri)]
     uris = uris+uri+'%2C'
 #print(uris)
+#print(len(titles))
 
 # Get songs features
 try:
@@ -48,6 +52,7 @@ except NoResponse:
     print('Cannot do')
 
 data = json.loads(r.text)
+#print(len(data['audio_features']))
 
 x = []
 
@@ -60,21 +65,33 @@ for n in range(0,len(titles)):
     liveness.append(data['audio_features'][n]['liveness'])
     valence.append(data['audio_features'][n]['valence'])
 
+# Creating X axis for corresponding size
 for n in range(0,len(titles)):
     x.append(n+1)
-    pass
 
-for n in range(0,len(titles)):
-    plt.subplot(2,3,n+1)
-    plt.scatter(x,features[n])
+for n in range(0,7):
+    value =[]
+    most =0
+    for b in range(0,len(features[n])):
+        value.append(features[n][b])
+    most = value.index(max(value))
+    bestest.append(titles[most])
+
+# Plotting
+for n in range(0,len(features)):
+    plt.subplot(4,3,n+1)
+    #Color Etiquette
+    for b in range(0,len(titles)-1):
+        plt.scatter(x[b],features[n][b],label=titles[b],s=12)
+
     plt.ylim(-0.25,1)
     plt.xlim(0,len(titles)+1)
-    plt.title(features_list[n])
-    # Etiquette
-    #for b in range(0,len(features_list)):
-    #    val = features[n]
-    #    plt.annotate(features_list[b],((b+1),val[b]))
+    plt.title('{} \n {}'.format(features_list[n],bestest[n]), fontsize=7)
 
+ncol = int( len(titles)/4)
+# Legend
+plt.legend(loc = (-0.3, -2.35), ncol=ncol )
 
-plt.subplots_adjust(wspace=0.50,hspace=0.75)
-plt.savefig('900.png', dpi=300)
+plt.subplots_adjust(wspace=0.50,hspace=0.85)
+plt.show()
+plt.savefig('album.png', dpi=300)
