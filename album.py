@@ -13,6 +13,7 @@ except FileNotFoundError:
 # Set album id, headers and requests
 print('Which album do you want to analyze, please paste the uri here:')
 id = input()
+#id = '1G2YEQPXaOj1JZwa3ZiGe8'
 headers = {'Authorization':'Bearer {}'.format(api_key)}
 try:
     r = requests.get('https://api.spotify.com/v1/albums/{}/tracks?limit=50'.format(id),headers=headers)
@@ -90,7 +91,7 @@ for n in range(0,len(features)):
 
 ncol = int( len(titles)/4)
 # Legend
-plt.legend(loc = (-0.3, -2.35), ncol=ncol )
+plt.legend(loc = (-0.3, -2.35), ncol=ncol , fontsize=7)
 
 plt.subplots_adjust(wspace=0.50,hspace=0.85)
 plt.show()
