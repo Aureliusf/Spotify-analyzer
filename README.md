@@ -29,7 +29,7 @@ For the longest album I could find, [Ella Fitzgerald Sings The George And Ira Ge
 
 ![Ella-Fitzgerald-Sings-The-George-And-Ira-Gershwin-Song-Book](examples/longest.png)
 
-(It runs into Spotify's API limitation so it only gets 50 of the 59 songs, but for lols)
+(It runs into [Spotify's API limitation](https://developer.spotify.com/documentation/web-api/reference/albums/get-albums-tracks "Spotify's API - Get an albums' tracks") so it only gets 50 of the 59 songs, but for lols)
 
 
 
