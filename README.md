@@ -6,6 +6,9 @@ This is an example with the [900](https://open.spotify.com/album/3yj1EziuVuch1Oa
 
 
 # Roadmap
+• Make it get the album if you enter an individual song
+
+• Usable for playlists and singles
 
 • Make it compare in between albums
 
