@@ -1,6 +1,0 @@
-• Make it comparable in between albums
-• Make external API key tool
-• Get conclusions in between albums
-• Get popularity numbers and cross them with the audio features
-• Get this into a backend and do it in a web server
-• Make it public to use
